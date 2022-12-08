@@ -21,11 +21,13 @@ function App() {
       <Sidebar />
       <MainContainer>
         <Routes>
-          <Route path="/" element={<CategoriesPage />} />
-          <Route path="/categories" element={<CategoriesPage />} />
-          <Route path="/categories/:type" element={<CategoriesPage />} />
-          <Route path="/transactions" element={<h1>Transactions</h1>} />
-          <Route path="/budgets" element={<h1>Budgets</h1>} />
+          <Route path="/">
+            <Route index element={<Navigate to="/categories" />} />
+            <Route path="categories" element={<CategoriesPage />} />
+            <Route path="categories/:type" element={<CategoriesPage />} />
+            <Route path="transactions" element={<h1>Transactions</h1>} />
+            <Route path="budgets" element={<h1>Budgets</h1>} />
+          </Route>
         </Routes>
       </MainContainer>
     </Container>
