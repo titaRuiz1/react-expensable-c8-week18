@@ -4,23 +4,45 @@ import Categories from "../components/Categories/categories";
 import MonthPicker from "../components/MonthPicker";
 import { typography } from "../styles";
 import { useParams, useSearchParams } from "react-router-dom";
+import React from "react";
 
 const Title = styled.h1`
   ${typography.head.sm}
   font-weight: 600;
 `;
 
-function CategoriesPage() {
-  let params = useParams();
-  const [searchParams, setSearchParams] = useSearchParams({
+function setInitialDate() {
+  const initialValue = {
     year: getYear(new Date()),
     month: getMonth(new Date()),
-  });
+  };
+
+  const dateFromLocalStorage = JSON.parse(
+    localStorage.getItem("expensable_date")
+  );
+
+  return dateFromLocalStorage || initialValue;
+}
+
+function CategoriesPage() {
+  let params = useParams();
+  const [searchParams, setSearchParams] = useSearchParams(setInitialDate());
+
   const type = params.type || "expense";
+
   const date = {
     year: +searchParams.get("year"),
     month: +searchParams.get("month"),
   };
+
+  React.useEffect(() => {
+    const newDate = {
+      year: +searchParams.get("year"),
+      month: +searchParams.get("month"),
+    };
+
+    localStorage.setItem("expensable_date", JSON.stringify(newDate));
+  }, [searchParams]);
 
   const handleRightClick = () => {
     const newMonth = date.month + 1;
