@@ -78,6 +78,29 @@ function Categories({ date, type }) {
     setIsOpen(false);
   }
 
+  function handleCalcSubmit(categoryId, amount, date) {
+    apiFetch(`categories/${categoryId}/transactions`, {
+      body: {
+        amount,
+        date,
+      },
+    })
+      .then((data) => {
+        const newCategories = [...categories];
+
+        // Busco la categoria donde se agrego la nueva transaccion
+        const category = newCategories.find((cat) => cat.id === categoryId);
+
+        // Agregar la nueva transaccion a mi categoria.
+        category.transactions.push(data);
+
+        setCategories(newCategories);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   if (loading) return <p>Loading categories...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
@@ -98,6 +121,7 @@ function Categories({ date, type }) {
           <Calculator
             category={selectedCategory}
             onCloseClick={handleCalculatorClose}
+            onCalcSubmit={handleCalcSubmit}
             date={date}
           />
         </CalculatorModal>

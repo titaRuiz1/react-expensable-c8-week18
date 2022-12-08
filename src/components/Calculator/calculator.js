@@ -103,7 +103,7 @@ function Button({ type = "digit", value, onClick }) {
   );
 }
 
-function Calculator({ category, onCloseClick, date }) {
+function Calculator({ category, onCloseClick, date, onCalcSubmit }) {
   const [prevNumber, setPrevNumber] = useState("");
   const [operant, setOperant] = useState("");
   const [currentNumber, setCurrentNumber] = useState("0");
@@ -146,7 +146,8 @@ function Calculator({ category, onCloseClick, date }) {
       setOperant("");
       setCurrentNumber(calculate());
     } else {
-      console.log(currentNumber);
+      onCalcSubmit(category.id, currentNumber, format(getDay(), "yyyy-MM-dd"));
+      onCloseClick();
     }
   }
 

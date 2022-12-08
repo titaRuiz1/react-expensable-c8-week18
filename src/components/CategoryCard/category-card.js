@@ -2,11 +2,11 @@ import CircleIcon from "../CircleIcon";
 import * as Styled from "./styles";
 import PropTypes from "prop-types";
 
-function CategoryCard({ name, color, Icon, amount, onCategoryClick }) {
+function CategoryCard({ id, name, color, Icon, amount, onCategoryClick }) {
   return (
     <Styled.Wrapper
       color={color}
-      onClick={() => onCategoryClick({ name, color, Icon, amount })}
+      onClick={() => onCategoryClick({ id, name, color, Icon, amount })}
     >
       <CircleIcon Icon={Icon} size="lg" color={color} />
       <div>

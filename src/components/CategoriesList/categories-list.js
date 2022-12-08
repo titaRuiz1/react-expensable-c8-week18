@@ -5,8 +5,12 @@ import { Wrapper } from "./styles";
 function CategoriesList({ data, onCategoryClick }) {
   return (
     <Wrapper>
-      {data.map(({ id, ...data }) => (
-        <CategoryCard key={id} onCategoryClick={onCategoryClick} {...data} />
+      {data.map(({ ...data }) => (
+        <CategoryCard
+          key={data.id}
+          onCategoryClick={onCategoryClick}
+          {...data}
+        />
       ))}
     </Wrapper>
   );
