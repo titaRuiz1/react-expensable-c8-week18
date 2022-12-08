@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
-import { colors } from "./styles";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
+
 import Sidebar from "./components/Sidebar";
 import CategoriesPage from "./pages/categories-page";
+import { colors } from "./styles";
 
 const Container = styled.div`
   display: grid;

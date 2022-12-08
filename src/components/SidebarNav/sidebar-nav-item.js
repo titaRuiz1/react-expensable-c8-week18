@@ -3,18 +3,6 @@ import styled from "@emotion/styled";
 import { colors, typography } from "../../styles";
 import { Link, NavLink } from "react-router-dom";
 
-// const currentStyles = (current) => {
-//   if (current) {
-//     return `
-//     background-color: ${colors.pink[400]};
-//     color: ${colors.white};
-//     &:hover {
-//       background-color: ${colors.pink[400]};
-//     }
-//     `;
-//   }
-// };
-
 const StyledNavLink = styled(NavLink)`
   padding: 0.5rem;
   display: flex;
@@ -38,11 +26,10 @@ const StyledNavLink = styled(NavLink)`
   }
 `;
 
-function SidebarNavItem({ name, icon, current, ...rest }) {
+function SidebarNavItem({ name, icon, to }) {
   return (
     <StyledNavLink
-      current={current ? "true" : undefined}
-      {...rest}
+      to={to}
       style={({ isActive }) => {
         if (!isActive) return;
         return {
