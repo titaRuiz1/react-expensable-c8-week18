@@ -39,7 +39,7 @@ const CalculatorModal = styled.div`
   right: 0;
   left: 0;
   background-color: rgb(23 23 23 / 75%);
-  display: ${(props) => (props.isOpen ? "flex" : "none")};
+  display: flex;
   justify-content: center;
   align-items: center;
 `;
@@ -49,6 +49,7 @@ function Categories({ date, type }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const monthlyData = getMonthlyData(categories, date, type);
   const total = monthlyData.reduce((acc, cur) => acc + cur.amount, 0);
@@ -67,7 +68,9 @@ function Categories({ date, type }) {
       });
   }, []);
 
-  function handleCategoryClick() {
+  function handleCategoryClick(category) {
+    console.log(category);
+    setSelectedCategory(category);
     setIsOpen(true);
   }
 
@@ -90,12 +93,14 @@ function Categories({ date, type }) {
         data={monthlyData}
         onCategoryClick={handleCategoryClick}
       />
-      <CalculatorModal isOpen={isOpen}>
-        <Calculator
-          category={monthlyData[0]}
-          onCloseClick={handleCalculatorClose}
-        />
-      </CalculatorModal>
+      {isOpen ? (
+        <CalculatorModal>
+          <Calculator
+            category={selectedCategory}
+            onCloseClick={handleCalculatorClose}
+          />
+        </CalculatorModal>
+      ) : null}
     </Wrapper>
   );
 }

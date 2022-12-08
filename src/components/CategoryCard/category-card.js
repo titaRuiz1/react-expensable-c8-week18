@@ -4,7 +4,10 @@ import PropTypes from "prop-types";
 
 function CategoryCard({ name, color, Icon, amount, onCategoryClick }) {
   return (
-    <Styled.Wrapper color={color} onClick={onCategoryClick}>
+    <Styled.Wrapper
+      color={color}
+      onClick={() => onCategoryClick({ name, color, Icon, amount })}
+    >
       <CircleIcon Icon={Icon} size="lg" color={color} />
       <div>
         <Styled.CategoryName>{name}</Styled.CategoryName>
