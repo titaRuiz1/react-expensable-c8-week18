@@ -6,6 +6,7 @@ import { RiCalendarEventFill } from "react-icons/ri";
 import { FaEquals } from "react-icons/fa";
 import { useState } from "react";
 import CircleIcon from "../CircleIcon";
+import { GrClose } from "react-icons/gr";
 
 const Container = styled.div`
   width: fit-content;
@@ -46,9 +47,15 @@ const Display = styled.div`
 const Header = styled.header`
   padding: 0.25rem 0.75rem;
   background-color: ${({ color }) => color};
+  grid-column: span 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const HeaderContainer = styled.div`
   display: flex;
   gap: 0.5rem;
-  grid-column: span 5;
 `;
 
 const SubmitButton = styled.button`
@@ -87,7 +94,7 @@ function Button({ type = "digit", value, onClick }) {
   );
 }
 
-function Calculator({ category }) {
+function Calculator({ category, onCloseClick }) {
   const [prevNumber, setPrevNumber] = useState("");
   const [operant, setOperant] = useState("");
   const [currentNumber, setCurrentNumber] = useState("0");
@@ -177,11 +184,21 @@ function Calculator({ category }) {
   return (
     <Container>
       <Header color={category.color}>
-        <CircleIcon color={category.color} Icon={category.icon} inverted />
-        <HeaderInfo>
-          <p className="title">Add expense to</p>
-          <p className="category">{category.name}</p>
-        </HeaderInfo>
+        <HeaderContainer>
+          <CircleIcon color={category.color} Icon={category.Icon} inverted />
+          <HeaderInfo>
+            <p className="title">Add expense to</p>
+            <p className="category">{category.name}</p>
+          </HeaderInfo>
+        </HeaderContainer>
+        <GrClose
+          style={{
+            cursor: "pointer",
+            height: "24px",
+            width: "24px",
+          }}
+          onClick={onCloseClick}
+        />
       </Header>
       <Display>$ {display}</Display>
       <Button value="÷" type="operant" onClick={handleOperantClick} />
