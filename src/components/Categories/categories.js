@@ -98,6 +98,7 @@ function Categories({ date, type }) {
           <Calculator
             category={selectedCategory}
             onCloseClick={handleCalculatorClose}
+            date={date}
           />
         </CalculatorModal>
       ) : null}

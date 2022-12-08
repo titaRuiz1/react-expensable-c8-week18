@@ -7,6 +7,7 @@ import { FaEquals } from "react-icons/fa";
 import { useState } from "react";
 import CircleIcon from "../CircleIcon";
 import { GrClose } from "react-icons/gr";
+import { format, getDay } from "date-fns";
 
 const Container = styled.div`
   width: fit-content;
@@ -86,6 +87,14 @@ const HeaderInfo = styled.div`
   }
 `;
 
+const DateContainer = styled.div`
+  grid-column: span 5;
+  background-color: ${colors.gray[100]};
+  text-align: center;
+  ${typography.text.xs}
+  padding: 0.25rem;
+`;
+
 function Button({ type = "digit", value, onClick }) {
   return (
     <StyledButton type={type} onClick={() => onClick(value)}>
@@ -94,7 +103,7 @@ function Button({ type = "digit", value, onClick }) {
   );
 }
 
-function Calculator({ category, onCloseClick }) {
+function Calculator({ category, onCloseClick, date }) {
   const [prevNumber, setPrevNumber] = useState("");
   const [operant, setOperant] = useState("");
   const [currentNumber, setCurrentNumber] = useState("0");
@@ -181,6 +190,24 @@ function Calculator({ category, onCloseClick }) {
     }
   }
 
+  function getDay() {
+    const selectedDate = new Date(date.year, date.month);
+    const currentDate = new Date();
+
+    if (
+      date.year === currentDate.getFullYear() &&
+      date.month === currentDate.getMonth()
+    ) {
+      return currentDate;
+    }
+
+    if (selectedDate < currentDate) {
+      return new Date(date.year, +date.month + 1, 0);
+    } else {
+      return new Date(date.year, +date.month, 1);
+    }
+  }
+
   return (
     <Container>
       <Header color={category.color}>
@@ -222,6 +249,8 @@ function Calculator({ category, onCloseClick }) {
       <Button value={<RiCalendarEventFill />} onClick={() => {}} />
       <Button value="0" onClick={handleDigitClick} />
       <Button value="." onClick={handleDigitClick} />
+
+      <DateContainer>{format(getDay(), "dd MMMM yyyy")}</DateContainer>
     </Container>
   );
 }
