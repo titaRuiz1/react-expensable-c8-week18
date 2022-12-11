@@ -6,6 +6,7 @@ import CategoriesList from "../CategoriesList";
 import styled from "@emotion/styled";
 import { colors, typography } from "../../styles";
 import Calculator from "../Calculator";
+import FormNew from "../FormNew";
 
 const Wrapper = styled.div`
   display: flex;
@@ -44,6 +45,18 @@ const CalculatorModal = styled.div`
   align-items: center;
 `;
 
+const NewCategoryModal = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgb(23 23 23 / 75%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 function Categories({ date, type }) {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -53,6 +66,7 @@ function Categories({ date, type }) {
 
   const monthlyData = getMonthlyData(categories, date, type);
   const total = monthlyData.reduce((acc, cur) => acc + cur.amount, 0);
+  const [isNew, setIsNew] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -75,7 +89,7 @@ function Categories({ date, type }) {
   }
 
   function handleNewCategoryClick() {
-    console.log("jijijij");
+    setIsNew(true);
   
   }
 
@@ -83,6 +97,14 @@ function Categories({ date, type }) {
     setIsOpen(false);
   }
 
+  function handleFormClose() {
+    setIsNew(false);
+  }
+
+  function handleCreateCategory(data, event){
+    event.preventDefault();
+    apiFetch("/categories",{body:data})
+  }
   function handleCalcSubmit(categoryId, amount, date) {
     apiFetch(`categories/${categoryId}/transactions`, {
       body: {
@@ -121,8 +143,17 @@ function Categories({ date, type }) {
         data={monthlyData}
         onCategoryClick={handleCategoryClick}
         onNewCategoryClick={handleNewCategoryClick}
-      />
-      {isOpen ? (
+        />
+        {isNew ? (
+          <NewCategoryModal>
+            <FormNew
+            onCreateCategory={handleCreateCategory}
+            onCloseForm = {handleFormClose}/>
+
+          </NewCategoryModal>
+        ) :null}
+
+        {isOpen ? (
         <CalculatorModal>
           <Calculator
             category={selectedCategory}

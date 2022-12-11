@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import PropTypes from "prop-types";
 import { colors } from "../../styles";
 
-const custom = {
+export const custom = {
   padding: {
     sm: "0.5rem",
     md: "0.625rem",
