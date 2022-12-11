@@ -7,7 +7,7 @@ import { AiFillCar, AiFillGift } from "react-icons/ai";
 
 import { colors } from "../../styles";
 
-const categoryColors = {
+export const categoryColors = {
   red: colors.red[500],
   orange: colors.orange[500],
   yellow: colors.yellow[500],
@@ -18,7 +18,7 @@ const categoryColors = {
   blue: colors.blue[500],
 };
 
-const categoryIcons = {
+export const categoryIcons = {
   bank: RiBankFill,
   cart: BsFillCartFill,
   health: GiHealthNormal,
